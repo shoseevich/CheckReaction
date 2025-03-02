@@ -1,0 +1,449 @@
+/* Общие стили */
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #45a049;
+    --background-color: #1e1e1e;
+    --text-color: #ffffff;
+    --card-background: #2c2c2c;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --glass-background: rgba(255, 255, 255, 0.1);
+    --border-radius: 15px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+}
+
+/* Контейнер игры */
+#game-container {
+    text-align: center;
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    width: 90%;
+    max-width: 1200px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-background);
+}
+
+/* Заголовок */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Стили для контейнера выбора сложности */
+#difficulty-selector {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#difficulty-selector label {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+/* Стили для выпадающего списка */
+#difficulty {
+    width: 200px; /* Фиксированная ширина */
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--glass-background);
+    border-radius: var(--border-radius);
+    background: var(--glass-background);
+    color: var(--text-color);
+    cursor: pointer;
+    appearance: none; /* Убираем стандартный стиль браузера */
+    transition: all var(--transition-speed) ease;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234CAF50'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25rem;
+}
+
+#difficulty:hover {
+    border-color: var(--primary-color);
+}
+
+#difficulty:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Стили для опций */
+#difficulty option {
+    background: var(--card-background);
+    color: var(--text-color);
+    padding: 0.5rem;
+}
+
+/* Стили для выбранной опции */
+#difficulty option:checked {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Игровая информация */
+#game-info {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+#game-info p {
+    margin: 0.5rem 0;
+}
+
+#game-area {
+    position: relative;
+    height: 50vh;
+    border: 2px solid var(--glass-background);
+    margin: 0 auto;
+    overflow: hidden;
+    transition: width var(--transition-speed) ease;
+    background: var(--glass-background);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(5px);
+    width: 60%; /* Начальная ширина */
+}
+
+/* Круги */
+.circle {
+    position: absolute;
+    width: 5vh; /* Фиксированный размер кругов */
+    height: 5vh; /* Фиксированный размер кругов */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 10px var(--shadow-color);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Кнопка "Начать игру" */
+#start-button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: all var(--transition-speed) ease;
+}
+
+#start-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px var(--shadow-color);
+}
+
+/* Сообщения */
+#message {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+/* Новые стили для ссылок */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+    font-size: 1rem;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+/* Медиа-запросы для адаптации на маленьких экранах */
+@media (max-width: 768px) {
+    #game-container {
+        width: 95%;
+    }
+
+    #game-area {
+        height: 40vh;
+    }
+
+    .circle {
+        width: 4vh;
+        height: 4vh;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    #difficulty-selector label {
+        font-size: 1rem;
+    }
+
+    #difficulty {
+        font-size: 0.9rem;
+    }
+
+    #game-info {
+        font-size: 1rem;
+    }
+
+    #start-button {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    #message {
+        font-size: 1rem;
+    }
+}
+
+/* Стили для контейнеров регистрации и авторизации */
+#register-container, #login-container {
+    text-align: center;
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-background);
+}
+
+/* Стили для форм */
+#register-form, #login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Расстояние между элементами */
+}
+
+
+#register-form label, #login-form label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Стили для полей ввода */
+#register-form input, #login-form input {
+    width: 80%; /* Уменьшаем ширину полей */
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--glass-background);
+    border-radius: var(--border-radius);
+    background: var(--glass-background);
+    color: var(--text-color);
+    transition: all var(--transition-speed) ease;
+    text-align: center; /* Выравнивание текста по центру */
+}
+
+#register-form input:focus, #login-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Стили для кнопок */
+#register-form button, #login-form button {
+    width: 80%; /* Уменьшаем ширину кнопок */
+    padding: 0.75rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: all var(--transition-speed) ease;
+}
+
+#register-form button:hover, #login-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px var(--shadow-color);
+}
+
+#register-message, #login-message {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+/* Стили для контейнера кнопок авторизации и регистрации */
+.auth-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Стили для кнопок авторизации и регистрации */
+.auth-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: all var(--transition-speed) ease;
+    text-decoration: none;
+}
+
+.auth-button i {
+    margin-right: 0.5rem;
+}
+
+.auth-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px var(--shadow-color);
+    color: white;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+}
+
+/* Медиа-запросы для адаптации на маленьких экранах */
+@media (max-width: 480px) {
+    .auth-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .auth-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+#best-score {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Стиль для сообщения о необходимости авторизации */
+#best-score[data-message] {
+    font-style: italic;
+    color: var(--text-color);
+    font-weight: normal;
+}
+
+/* Стили для контейнера с кнопками управления игрой */
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Расстояние между кнопками */
+    margin-top: 1.5rem;
+}
+
+/* Стили для кнопки "Как играть?" */
+#how-to-play-button {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: all var(--transition-speed) ease;
+}
+
+#how-to-play-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px var(--shadow-color);
+}
+
+#how-to-play-button i {
+    margin-right: 0.5rem;
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    backdrop-filter: blur(5px); /* Размытие фона */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px var(--shadow-color);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+}
+
+.modal-content h2 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.modal-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color var(--transition-speed) ease;
+}
+
+.close-button:hover {
+    color: var(--primary-color);
+}

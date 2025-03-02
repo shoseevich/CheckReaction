@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренировка реакции</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Тренировка реакции</h1>
+        <div id="difficulty-selector">
+            <label for="difficulty">Выберите уровень сложности:</label>
+            <select id="difficulty">
+                <option value="easy">Легкий</option>
+                <option value="medium">Средний</option>
+                <option value="hard">Сложный</option>
+            </select>
+        </div>
+        <div id="game-info">
+            <p>Очки: <span id="score">0</span></p>
+            <p>Время: <span id="timer">15</span> сек</p>
+            <p>Лучший результат (<span id="current-difficulty">легкий</span>): <span id="best-score">0</span></p>
+        </div>
+        <div id="game-area"></div>
+        <div class="game-controls">
+            <button id="start-button"><i class="fas fa-play"></i> Начать игру</button>
+            <button id="how-to-play-button"><i class="fas fa-question-circle"></i> Как играть?</button>
+        </div>
+        <p id="message"></p>
+        <div class="auth-buttons">
+            <a href="/login" class="auth-button"><i class="fas fa-sign-in-alt"></i> Авторизация</a>
+            <a href="/register" class="auth-button"><i class="fas fa-user-plus"></i> Регистрация</a>
+        </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="how-to-play-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Как играть?</h2>
+            <p>
+                1. Выберите уровень сложности.<br>
+                2. Нажмите "Начать игру".<br>
+                3. Нажимайте на зеленые круги, чтобы заработать очки.<br>
+                4. Избегайте кругов других цветов, чтобы не терять очки.<br>
+                5. Игра закончится, когда время истечет.
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/game.js"></script>
+</body>
+</html>
