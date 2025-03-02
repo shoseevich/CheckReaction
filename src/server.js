@@ -80,6 +80,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+app.get('/icon.png', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'icon.png'));
+});
+
 // Маршрут для страницы авторизации
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
@@ -115,8 +119,7 @@ app.post('/api/register', (req, res) => {
     });
 });
 
-// Маршрут для сохранения рекорда
-app.post('/api/records', (req, res) => {
+app.post('/api/records', async (req, res) => {
     const { score, difficulty } = req.body;
     const userId = req.user?.id; // Получаем ID пользователя из сессии
 
@@ -128,20 +131,43 @@ app.post('/api/records', (req, res) => {
         return res.status(400).json({ error: 'Необходимо указать score и difficulty.' });
     }
 
-    const query = `
-        INSERT INTO records (user_id, score, difficulty)
-        VALUES (?, ?, ?)
-    `;
+    try {
+        // Проверяем текущий лучший результат
+        const bestScoreQuery = `
+            SELECT MAX(score) AS bestScore
+            FROM records
+            WHERE user_id = ? AND difficulty = ?
+        `;
+        const bestScoreResult = await new Promise((resolve, reject) => {
+            db.get(bestScoreQuery, [userId, difficulty], (err, row) => {
+                if (err) reject(err);
+                else resolve(row?.bestScore || 0);
+            });
+        });
 
-    db.run(query, [userId, score, difficulty], function (err) {
-        if (err) {
-            return res.status(500).json({ error: 'Ошибка при сохранении рекорда.' });
+        // Если новый результат лучше текущего лучшего, сохраняем его
+        if (score > bestScoreResult) {
+            const insertQuery = `
+                INSERT INTO records (user_id, score, difficulty)
+                VALUES (?, ?, ?)
+            `;
+            await new Promise((resolve, reject) => {
+                db.run(insertQuery, [userId, score, difficulty], function (err) {
+                    if (err) reject(err);
+                    else resolve(this.lastID);
+                });
+            });
+
+            return res.status(201).json({ success: true, message: 'Рекорд сохранен!' });
+        } else {
+            return res.status(200).json({ success: false, message: 'Новый результат не лучше текущего рекорда.' });
         }
-        res.status(201).json({ id: this.lastID });
-    });
+    } catch (error) {
+        console.error('Ошибка:', error);
+        return res.status(500).json({ error: 'Ошибка при сохранении рекорда.' });
+    }
 });
 
-// Маршрут для получения лучшего результата
 app.get('/api/best-score', (req, res) => {
     const userId = req.user?.id; // Получаем ID пользователя из сессии
     const { difficulty } = req.query;
@@ -168,7 +194,6 @@ app.get('/api/best-score', (req, res) => {
         res.json({ bestScore: row?.bestScore || 0 });
     });
 });
-
 
 // Запуск сервера
 app.listen(port, () => {
